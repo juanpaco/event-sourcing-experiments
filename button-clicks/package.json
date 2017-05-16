@@ -1,0 +1,58 @@
+{
+  "name": "button-clicks",
+  "version": "1.0.0",
+  "description": "Exploring Event Sourcing with a system that tracks button clicks",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint deploy src test",
+    "reset": "rm button-click*.sqlite && knex migrate:latest && NODE_ENV=test knex migrate:latest",
+    "start": "nodemon --exec babel-node -- src/bin/start-server.js | bunyan -o short",
+    "test": "NODE_ENV=test tape -r babel-register 'test/**/*ests.js' | bunyan -o short"
+  },
+  "keywords": [
+    "event",
+    "sourcing"
+  ],
+  "author": "Ethan Garofolo <ethan@suchsoftware.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.18.0",
+    "babel-eslint": "^7.1.1",
+    "babel-plugin-transform-object-rest-spread": "^6.16.0",
+    "babel-preset-es2015": "^6.18.0",
+    "blue-tape": "^1.0.0",
+    "eslint": "^3.10.2",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-config-suchsoftware": "^1.0.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3",
+    "nodemon": "^1.11.0",
+    "supertest": "^2.0.1",
+    "tape": "^4.6.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "bunyan": "^1.8.5",
+    "colors": "^1.1.2",
+    "cors": "^2.8.3",
+    "cuid": "^1.3.8",
+    "dotenv": "^4.0.0",
+    "email-templates": "^2.5.4",
+    "eslint-config-suchsoftware": "^1.0.1",
+    "express": "^4.15.2",
+    "graphql": "^0.9.5",
+    "graphql-server-express": "^0.7.2",
+    "graphql-tools": "^0.11.0",
+    "haqt": "0.0.2",
+    "knex": "^0.12.9",
+    "less": "^2.7.2",
+    "letter-opener-express": "^1.0.1",
+    "lodash": "^4.17.4",
+    "nodemailer": "^3.1.8",
+    "nodemailer-pickup-transport": "^0.1.1",
+    "pug": "^2.0.0-rc.1",
+    "sqlite3": "^3.1.8"
+  }
+}

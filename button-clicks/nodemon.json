@@ -1,0 +1,4 @@
+{
+  "ext": ".js,.jsx,.json",
+  "ignore": [ "content/**/*", "test/**/*", "build/**/*", "dist/*", "schema/*", "public/**/*" ]
+}
