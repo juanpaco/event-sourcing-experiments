@@ -1,8 +1,7 @@
-import { keys } from 'lodash'
 import supertest from 'supertest'
 import test from 'blue-tape'
 
-import { app, config } from '../../test-helper'; 
+import { app, config } from '../../test-helper'
 
 test(`${ __filename }: It creates a button`, t => {
   const query = {
@@ -41,8 +40,8 @@ test(`${ __filename }: We can fetch all the buttons`, t => {
 
   const events = [
     { type: 'buttonCreated', aggregateId: '1', aggregateType: 'button' },
-    { type: 'buttonCreated', aggregateId: '2', aggregateType: 'button' },
-    { type: 'buttonCreated', aggregateId: '3', aggregateType: 'button' },
+     { type: 'buttonCreated', aggregateId: '2', aggregateType: 'button' },
+     { type: 'buttonCreated', aggregateId: '3', aggregateType: 'button' },
   ]
 
   const query = {

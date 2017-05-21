@@ -1,5 +1,5 @@
 export default config => {
-    const rootSchema = `
+  const rootSchema = `
         type Query {
           buttons: [ Button ]
           events: [ Event ]
@@ -14,11 +14,11 @@ export default config => {
             query: Query
             mutation: Mutation
         }
-  `;
+  `
 
-    return [
-        rootSchema,
-        config.buttons.schema,
-        config.events.schema,
-    ];
-};
+  return [
+    rootSchema,
+    config.buttons.schema,
+    config.events.schema,
+  ]
+}

@@ -1,18 +1,18 @@
-import knex from 'knex';
+import knex from 'knex'
 
 export default ({
     allowDbWipe,
     databaseUrl,
 }) => {
-    const client = knex({
-      client: 'sqlite',
-      connection: databaseUrl,
-      useNullAsDefault: true
-    })
+  const client = knex({
+    client: 'sqlite',
+    connection: databaseUrl,
+    useNullAsDefault: true,
+  })
 
-    const retval = {
-      client
-    }
+  const retval = {
+    client,
+  }
 
     /**
      * @describes - Destroys and recreates the db. Testing likes clean
@@ -21,21 +21,21 @@ export default ({
      * @returns {Promise} - A promise chain that resolves when the db has been
      *   created.
     */
-    function wipeDb() {
-        const tables = [
-          'events',
-        ];
+  function wipeDb() {
+    const tables = [
+      'events',
+    ]
 
-        return tables.reduce(
+    return tables.reduce(
           (chain, t) => chain.then(() => client(t).del()),
           Promise.resolve(true),
         )
-    }
+  }
 
     // Some things aren't meant for non-test environments.
-    if (allowDbWipe) {
-        retval.wipeDb = wipeDb;
-    }
+  if (allowDbWipe) {
+    retval.wipeDb = wipeDb
+  }
 
-    return retval;
-};
+  return retval
+}

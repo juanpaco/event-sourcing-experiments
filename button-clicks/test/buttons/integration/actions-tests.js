@@ -1,11 +1,11 @@
 import test from 'blue-tape'
 
-import { config } from '../../test-helper'; 
+import { config } from '../../test-helper'
 
 test(`${ __filename }: It creates a button`, t => {
-    const context = { correlationId: 'the legend of correlationId' }
+  const context = { correlationId: 'the legend of correlationId' }
 
-    return config.db.wipeDb()
+  return config.db.wipeDb()
       .then(() => config.buttons.actions.createButton(context))
       .then(button => Promise.all([ button, config.events.queries.all() ]))
       .then(([ button, events ]) => {
@@ -17,4 +17,4 @@ test(`${ __filename }: It creates a button`, t => {
         t.equal(event.aggregateId, button.id, 'button id matches agg id')
         t.equal(event.correlationId, context.correlationId, 'same cor id')
       })
-});
+})

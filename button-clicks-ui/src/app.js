@@ -1,10 +1,22 @@
 import { Button as BSButton, Col, Grid, Navbar, Row } from 'react-bootstrap'
-import { compose, gql, graphql, withApollo } from 'react-apollo';
-import React, { Component } from 'react';
+import { compose, gql, graphql, withApollo } from 'react-apollo'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 
 import Button from './button'
 
 class App extends Component {
+  static propTypes = {
+    clickButton: PropTypes.func.isRequired,
+    createButton: PropTypes.func.isRequired,
+    data: PropTypes.shape({
+      buttons: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string.isRequired,
+      })),
+      loading: PropTypes.bool.isRequired,
+    }).isRequired,
+  }
+
   constructor(props) {
     super(props)
 
@@ -42,7 +54,7 @@ class App extends Component {
           </Navbar.Brand>
         </Navbar.Header>
       </Navbar>
-      
+
       <Grid>
         <Row>
           <Col xs={ 12 }>
@@ -50,10 +62,10 @@ class App extends Component {
               Create button
             </BSButton>
             <hr />
-			    </Col>
+          </Col>
         </Row>
         <Row>
-          { this.renderBody() } 
+          { this.renderBody() }
         </Row>
       </Grid>
     </div>
@@ -67,7 +79,7 @@ const buttonsQuery = gql`
       clicks
     }
   }
-`;
+`
 
 const createButtonMutation = gql`
   mutation {
@@ -82,10 +94,10 @@ const createButtonMutationOptions = {
   name: 'createButton',
   options: {
     update: (proxy, { data: { createButton } }) => {
-      const data = proxy.readQuery({ query: buttonsQuery });
+      const data = proxy.readQuery({ query: buttonsQuery })
 
-      data.buttons.push(createButton);
-      proxy.writeQuery({ query: buttonsQuery, data });
+      data.buttons.push(createButton)
+      proxy.writeQuery({ query: buttonsQuery, data })
     },
   },
 }
@@ -101,21 +113,19 @@ const clickButtonMutation = gql`
 
 const clickButtonMutationOptions = {
   props: ({ mutate }) => ({
-    clickButton: id => mutate({ variables: { id } })
+    clickButton: id => mutate({ variables: { id } }),
   }),
   options: {
     update: (proxy, { data: { clickButton } }) => {
-      const data = proxy.readQuery({ query: buttonsQuery });
+      const data = proxy.readQuery({ query: buttonsQuery })
 
       const button = data.buttons.find(b => b.id === clickButton.id)
       button.clicks = clickButton.clicks
-      console.log('clickbutton', clickButton)
-      console.log('data', data)
 
-      //data.buttons.push(createButton);
-      proxy.writeQuery({ query: buttonsQuery, data });
+      // data.buttons.push(createButton);
+      proxy.writeQuery({ query: buttonsQuery, data })
     },
-  }
+  },
 }
 
 export default compose(

@@ -1,4 +1,4 @@
-import test from 'blue-tape';
+import test from 'blue-tape'
 
 import { getButtonsNeedingEmail } from '../../src/send-email'
 

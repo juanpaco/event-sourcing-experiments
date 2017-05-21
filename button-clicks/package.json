@@ -23,16 +23,17 @@
     "babel-preset-es2015": "^6.18.0",
     "blue-tape": "^1.0.0",
     "eslint": "^3.10.2",
-    "eslint-config-airbnb": "^14.1.0",
-    "eslint-config-suchsoftware": "^1.0.1",
+    "eslint-config-airbnb": "^15.0.1",
+    "eslint-config-suchsoftware": "^2.0.0",
     "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^6.10.3",
+    "eslint-plugin-jsx-a11y": "^5.0.1",
+    "eslint-plugin-react": "^7.0.1",
     "nodemon": "^1.11.0",
     "supertest": "^2.0.1",
     "tape": "^4.6.2"
   },
   "dependencies": {
+    "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "bunyan": "^1.8.5",
     "colors": "^1.1.2",
@@ -40,7 +41,6 @@
     "cuid": "^1.3.8",
     "dotenv": "^4.0.0",
     "email-templates": "^2.5.4",
-    "eslint-config-suchsoftware": "^1.0.1",
     "express": "^4.15.2",
     "graphql": "^0.9.5",
     "graphql-server-express": "^0.7.2",
@@ -54,5 +54,10 @@
     "nodemailer-pickup-transport": "^0.1.1",
     "pug": "^2.0.0-rc.1",
     "sqlite3": "^3.1.8"
+  },
+  "eslintConfig": {
+    "extends": [
+      "suchsoftware"
+    ]
   }
 }

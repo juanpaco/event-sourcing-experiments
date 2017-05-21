@@ -1,24 +1,28 @@
 import cuid from 'cuid'
 
 export function rollup(events) {
+  /* eslint-disable no-param-reassign */
   const reduction = events.reduce(
     (memo, e) => {
       switch (e.type) {
         case 'buttonClicked':
+          // Calling this save since memo is created in this function
+          // eslint-disable-next-line no-plusplus
           memo.entities[e.aggregateId].clicks++
           break
         case 'buttonCreated':
           memo.correctOrder.push(e.aggregateId)
           memo.entities[e.aggregateId] = { id: e.aggregateId, clicks: 0 }
-          break;
+          break
         default:
-          break;
+          break
       }
 
       return memo
     },
     { correctOrder: [], entities: {} },
   )
+  /* eslint-enable no-param-reassign */
 
   return reduction.correctOrder.map(id => reduction.entities[id])
 }
@@ -37,7 +41,7 @@ const createActions = ({ emit, eventsQueries }) => {
   }
 
   function createButton(context = {}) {
-    // Do some validation  
+    // Do some validation
     const button = {
       id: cuid(),
       clicks: 0,
@@ -61,7 +65,7 @@ const createActions = ({ emit, eventsQueries }) => {
   }
 
   function getButtons(context = {}) {
-    return eventsQueries.allByAggregateType('button', context) 
+    return eventsQueries.allByAggregateType('button', context)
       .then(rollup)
   }
 
@@ -72,25 +76,23 @@ const createActions = ({ emit, eventsQueries }) => {
   }
 }
 
-const createResolvers = ({ actions }) => {
-  return {
-    root: {
-      buttons(_, params, context) {
-        return actions.getButtons(context)
-      },
+const createResolvers = ({ actions }) => ({
+  root: {
+    buttons(_, params, context) {
+      return actions.getButtons(context)
+    },
+  },
+
+  mutation: {
+    clickButton(_, { id }, context) {
+      return actions.clickButton(id, context)
     },
 
-    mutation: {
-      clickButton(_, { id }, context) {
-        return actions.clickButton(id, context)
-      },
-
-      createButton(_, params, context) {
-        return actions.createButton(context)
-      },
+    createButton(_, params, context) {
+      return actions.createButton(context)
     },
-  }
-}
+  },
+})
 
 // Schema
 const Button = `
@@ -103,12 +105,12 @@ const Button = `
 const schema = () => [ Button ]
 
 export default ({ emit, events }) => {
-    const actions = createActions({ emit, eventsQueries: events.queries });
-    const resolvers = createResolvers({ actions });
+  const actions = createActions({ emit, eventsQueries: events.queries })
+  const resolvers = createResolvers({ actions })
 
-    return {
-      actions,
-      resolvers,
-      schema,
-    }
+  return {
+    actions,
+    resolvers,
+    schema,
+  }
 }

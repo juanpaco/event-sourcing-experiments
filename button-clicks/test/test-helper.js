@@ -1,10 +1,11 @@
-import { app, config } from '../src/app';
-import test from 'blue-tape';
+import test from 'blue-tape'
+
+import { app, config } from '../src/app'
 
 test.onFinish(() => config.db.client.destroy())
 
 function clearDb() {
-    return config.db.wipeDb();
+  return config.db.wipeDb()
 }
 
-export { app, clearDb, config };
+export { app, clearDb, config }

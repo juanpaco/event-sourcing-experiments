@@ -1,17 +1,17 @@
-import { merge } from 'lodash';
+import { merge } from 'lodash'
 
 export default config => {
-    const rootResolvers = {
-        Query: merge(
+  const rootResolvers = {
+    Query: merge(
           config.buttons.resolvers.root,
         ),
-        Mutation: merge(
+    Mutation: merge(
           config.buttons.resolvers.mutation,
         ),
-    };
+  }
 
-    return merge(
+  return merge(
         rootResolvers,
-    );
-};
+    )
+}
 

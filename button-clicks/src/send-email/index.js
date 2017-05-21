@@ -1,67 +1,65 @@
 import { filter } from 'lodash'
-import { join } from 'path';
-
-import { generate, types } from '../events';
+import { join } from 'path'
 
 export function getButtonsNeedingEmail(events) {
+  /* eslint-disable no-param-reassign */
   const reduction = events.reduce(
     (memo, e) => {
       switch (e.type) {
         case 'buttonClicked':
-          if (typeof(memo[e.aggregateId].needsEmail) === 'undefined') {
+          if (typeof (memo[e.aggregateId].needsEmail) === 'undefined') {
             memo[e.aggregateId].needsEmail = true
             memo[e.aggregateId].emailTriggerCorrelationId = e.correlationId
           }
           break
         case 'buttonCreated':
           memo[e.aggregateId] = { id: e.aggregateId }
-          break;
+          break
         case 'emailSent':
           memo[e.aggregateId].needsEmail = false
+          break
         default:
-          break;
+          break
       }
 
       return memo
     },
     {},
   )
+  /* eslint-enable no-param-reassign */
 
   return filter(reduction, button => button.needsEmail)
 }
 
 export default ({ emit, events, sendEmail }) => {
-    const templatesPath = join(__dirname, 'templates');
+  const templatesPath = join(__dirname, 'templates')
 
-    function sendEmailForButton(button) {
-      console.log('sending for:', button.id)
-        const template = 'first-button-click';
-        const templateContext = { buttonId: button.id };
-        const subject = '';
-        const to = 'someonebuttony@example.com'
-        const sendEmailPromise = sendEmail(
+  function sendEmailForButton(button) {
+    const template = 'first-button-click'
+    const templateContext = { buttonId: button.id }
+    const subject = ''
+    const to = 'someonebuttony@example.com'
+    const sendEmailPromise = sendEmail(
             templatesPath,
             template,
             templateContext,
             subject,
             to,
-        );
+        )
 
-        return sendEmailPromise
+    return sendEmailPromise
           .then(() => emit({
             type: 'emailSent',
             aggregateId: button.id,
             aggregateType: 'button',
             correlationId: button.emailTriggerCorrelationId,
           }))
-    }
+  }
 
-    function checkForSend() {
-      console.log('checking for send')
+  function checkForSend() {
+    const context = { correlationId: 'email-check' }
 
-      const context = { correlationId: 'email-check' }
-
-      return events.queries.allByAggregateType('button', context)
+    return events.queries.allByAggregateType('button', context)
         .then(getButtonsNeedingEmail)
         .then(buttons => {
           if (buttons.length === 0) return null
@@ -71,14 +69,14 @@ export default ({ emit, events, sendEmail }) => {
             Promise.resolve(true),
           )
         })
-    }
+  }
 
-    function tick() {
-      return checkForSend()
+  function tick() {
+    return checkForSend()
         .then(() => setTimeout(tick, 10000))
-    }
+  }
 
-    tick()
+  tick()
 
-    return {}
-};
+  return {}
+}
