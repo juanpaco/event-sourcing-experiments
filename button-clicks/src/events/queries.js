@@ -10,23 +10,23 @@ export default ({ db }) => {
 
   // In a real system there would be logging that uses context
   // eslint-disable-next-line no-unused-vars
-  function allByAggregateId(aggregateId, context = {}) {
+  function allByStreamId(streamId, context = {}) {
     return db
       .client
       .select()
       .from('events')
-      .where({ aggregate_id: aggregateId })
+      .where({ stream_id: streamId })
       .then(rows => rows.map(transforms.itemToInstance))
   }
 
   // In a real system there would be logging that uses context
   // eslint-disable-next-line no-unused-vars
-  function allByAggregateType(aggregateType, context = {}) {
+  function allByStreamType(streamType, context = {}) {
     return db
       .client
       .select()
       .from('events')
-      .where({ aggregate_type: aggregateType })
+      .where({ stream_type: streamType })
       .then(rows => rows.map(transforms.itemToInstance))
   }
 
@@ -43,8 +43,8 @@ export default ({ db }) => {
 
   return {
     all,
-    allByAggregateId,
-    allByAggregateType,
+    allByStreamId,
+    allByStreamType,
     create,
   }
 }

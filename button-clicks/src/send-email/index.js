@@ -7,16 +7,16 @@ export function getButtonsNeedingEmail(events) {
     (memo, e) => {
       switch (e.type) {
         case 'buttonClicked':
-          if (typeof (memo[e.aggregateId].needsEmail) === 'undefined') {
-            memo[e.aggregateId].needsEmail = true
-            memo[e.aggregateId].emailTriggerCorrelationId = e.correlationId
+          if (typeof (memo[e.streamId].needsEmail) === 'undefined') {
+            memo[e.streamId].needsEmail = true
+            memo[e.streamId].emailTriggerCorrelationId = e.correlationId
           }
           break
         case 'buttonCreated':
-          memo[e.aggregateId] = { id: e.aggregateId }
+          memo[e.streamId] = { id: e.streamId }
           break
         case 'emailSent':
-          memo[e.aggregateId].needsEmail = false
+          memo[e.streamId].needsEmail = false
           break
         default:
           break
@@ -50,8 +50,8 @@ export default ({ emit, events, sendEmail }) => {
     return sendEmailPromise
           .then(() => emit({
             type: 'emailSent',
-            aggregateId: button.id,
-            aggregateType: 'button',
+            streamId: button.id,
+            streamType: 'button',
             correlationId: button.emailTriggerCorrelationId,
           }))
   }
@@ -59,7 +59,7 @@ export default ({ emit, events, sendEmail }) => {
   function checkForSend() {
     const context = { correlationId: 'email-check' }
 
-    return events.queries.allByAggregateType('button', context)
+    return events.queries.allByStreamType('button', context)
         .then(getButtonsNeedingEmail)
         .then(buttons => {
           if (buttons.length === 0) return null

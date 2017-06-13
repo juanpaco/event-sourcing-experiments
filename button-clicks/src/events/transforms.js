@@ -3,8 +3,8 @@ import { snakeCase } from 'lodash'
 
 const fields = [
   'id',
-  'aggregateId',
-  'aggregateType',
+  'streamId',
+  'streamType',
   'correlationId',
   'payload',
 ]

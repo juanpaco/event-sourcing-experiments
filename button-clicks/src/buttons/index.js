@@ -8,11 +8,11 @@ export function rollup(events) {
         case 'buttonClicked':
           // Calling this save since memo is created in this function
           // eslint-disable-next-line no-plusplus
-          memo.entities[e.aggregateId].clicks++
+          memo.entities[e.streamId].clicks++
           break
         case 'buttonCreated':
-          memo.correctOrder.push(e.aggregateId)
-          memo.entities[e.aggregateId] = { id: e.aggregateId, clicks: 0 }
+          memo.correctOrder.push(e.streamId)
+          memo.entities[e.streamId] = { id: e.streamId, clicks: 0 }
           break
         default:
           break
@@ -32,8 +32,8 @@ const createActions = ({ emit, eventsQueries }) => {
     return emit(
       {
         type: 'buttonClicked',
-        aggregateId: buttonId,
-        aggregateType: 'button',
+        streamId: buttonId,
+        streamType: 'button',
       },
       context,
     )
@@ -50,8 +50,8 @@ const createActions = ({ emit, eventsQueries }) => {
     return emit(
       {
         type: 'buttonCreated',
-        aggregateId: button.id,
-        aggregateType: 'button',
+        streamId: button.id,
+        streamType: 'button',
       },
       context,
     )
@@ -59,13 +59,13 @@ const createActions = ({ emit, eventsQueries }) => {
   }
 
   function getButton(id, context = {}) {
-    return eventsQueries.allByAggregateId(id, context)
+    return eventsQueries.allByStreamId(id, context)
       .then(rollup)
       .then(buttons => buttons[0])
   }
 
   function getButtons(context = {}) {
-    return eventsQueries.allByAggregateType('button', context)
+    return eventsQueries.allByStreamType('button', context)
       .then(rollup)
   }
 

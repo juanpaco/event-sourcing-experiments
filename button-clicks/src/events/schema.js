@@ -1,7 +1,7 @@
 const Event = `
   type Event {
-    aggregateId: String!
-    aggregateType: String!
+    streamId: String!
+    streamType: String!
     type: String!
     correlation_id: String!
     payload: String
