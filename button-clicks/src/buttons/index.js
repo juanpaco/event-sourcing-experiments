@@ -5,7 +5,7 @@ export function rollup(events) {
   const reduction = events.reduce(
     (memo, e) => {
       switch (e.type) {
-        case 'buttonClicked':
+        case 'countIncremented':
           // Calling this save since memo is created in this function
           // eslint-disable-next-line no-plusplus
           memo.entities[e.streamId].clicks++
@@ -31,7 +31,7 @@ const createActions = ({ emit, eventsQueries }) => {
   function clickButton(buttonId, context = {}) {
     return emit(
       {
-        type: 'buttonClicked',
+        type: 'countIncremented',
         streamId: buttonId,
         streamType: 'button',
       },

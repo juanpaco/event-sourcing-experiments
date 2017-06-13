@@ -2,31 +2,31 @@ import test from 'blue-tape'
 
 import { getButtonsNeedingEmail } from '../../src/send-email'
 
-test.only(`${ __filename }: Can project buttons for emails`, t => {
+test(`${ __filename }: Can project buttons for emails`, t => {
   const events = [
     // 1 does not need an email because it was already sent
     {
       type: 'buttonCreated',
-      aggregateId: '1',
-      aggregateType: 'button',
+      streamId: '1',
+      streamType: 'button',
       correlationId: '1-1',
     },
     {
-      type: 'buttonClicked',
-      aggregateId: '1',
-      aggregateType: 'button',
+      type: 'countIncremented',
+      streamId: '1',
+      streamType: 'button',
       correlationId: '1-2',
     },
     {
       type: 'emailSent',
-      aggregateId: '1',
-      aggregateType: 'button',
+      streamId: '1',
+      streamType: 'button',
       correlation: '1-2',
     },
     {
-      type: 'buttonClicked',
-      aggregateId: '1',
-      aggregateType: 'button',
+      type: 'countIncremented',
+      streamId: '1',
+      streamType: 'button',
       correlationId: '1-3',
     },
 
@@ -34,22 +34,22 @@ test.only(`${ __filename }: Can project buttons for emails`, t => {
     //   been sent
     {
       type: 'buttonCreated',
-      aggregateId: '2',
-      aggregateType: 'button',
+      streamId: '2',
+      streamType: 'button',
       correlationId: '2-1',
     },
     {
-      type: 'buttonClicked',
-      aggregateId: '2',
-      aggregateType: 'button',
+      type: 'countIncremented',
+      streamId: '2',
+      streamType: 'button',
       correlationId: '2-2',
     },
 
     // 3 does not need an email, because it has not yet been clicked
     {
       type: 'buttonCreated',
-      aggregateId: '3',
-      aggregateIdgateType: 'button',
+      streamId: '3',
+      streamIdgateType: 'button',
       correlationId: '3-1',
     },
   ]

@@ -8,8 +8,8 @@ test(`${ __filename }: It creates an event`, t => {
 
   const instance = {
     type: 'buttonCreated',
-    aggregateId: cuid(),
-    aggregateType: 'button',
+    streamId: cuid(),
+    streamType: 'button',
     payload: {},
   }
 
@@ -21,6 +21,6 @@ test(`${ __filename }: It creates an event`, t => {
 
         const event = events[0]
 
-        t.equal(event.aggregateId, instance.aggregateId, 'same agg id')
+        t.equal(event.streamId, instance.streamId, 'same agg id')
       })
 })

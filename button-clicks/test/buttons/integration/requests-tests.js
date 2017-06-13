@@ -30,7 +30,7 @@ test(`${ __filename }: It creates a button`, t => {
 
       const event = events[0]
 
-      t.equal(event.aggregateId, button.id, 'button id matches agg id')
+      t.equal(event.streamId, button.id, 'button id matches agg id')
       t.ok(event.correlationId, 'has a correlation id')
     })
 })
@@ -39,9 +39,9 @@ test(`${ __filename }: We can fetch all the buttons`, t => {
   const context = { correlationId: 'here is an id!' }
 
   const events = [
-    { type: 'buttonCreated', aggregateId: '1', aggregateType: 'button' },
-     { type: 'buttonCreated', aggregateId: '2', aggregateType: 'button' },
-     { type: 'buttonCreated', aggregateId: '3', aggregateType: 'button' },
+    { type: 'buttonCreated', streamId: '1', streamType: 'button' },
+     { type: 'buttonCreated', streamId: '2', streamType: 'button' },
+     { type: 'buttonCreated', streamId: '3', streamType: 'button' },
   ]
 
   const query = {
@@ -76,7 +76,7 @@ test(`${ __filename }: We can click a button`, t => {
   const context = { correlationId: 'here is an id!' }
 
   const events = [
-    { type: 'buttonCreated', aggregateId: '1', aggregateType: 'button' },
+    { type: 'buttonCreated', streamId: '1', streamType: 'button' },
   ]
 
   const query = {

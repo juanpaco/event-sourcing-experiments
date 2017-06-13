@@ -6,7 +6,7 @@ export function getButtonsNeedingEmail(events) {
   const reduction = events.reduce(
     (memo, e) => {
       switch (e.type) {
-        case 'buttonClicked':
+        case 'countIncremented':
           if (typeof (memo[e.streamId].needsEmail) === 'undefined') {
             memo[e.streamId].needsEmail = true
             memo[e.streamId].emailTriggerCorrelationId = e.correlationId

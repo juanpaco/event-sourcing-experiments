@@ -14,7 +14,7 @@ test(`${ __filename }: It creates a button`, t => {
 
         const event = events[0]
 
-        t.equal(event.aggregateId, button.id, 'button id matches agg id')
+        t.equal(event.streamId, button.id, 'button id matches agg id')
         t.equal(event.correlationId, context.correlationId, 'same cor id')
       })
 })
