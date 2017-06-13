@@ -6,7 +6,7 @@ export function rollup(events) {
     (memo, e) => {
       switch (e.type) {
         case 'buttonClicked':
-          // Calling this save since memo is created in this function
+          // Calling this safe since memo is created in this function
           // eslint-disable-next-line no-plusplus
           memo.entities[e.streamId].clicks++
           break
